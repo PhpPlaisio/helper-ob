@@ -17,6 +17,7 @@ final class OB
   private $level;
 
   //--------------------------------------------------------------------------------------------------------------------
+
   /**
    * Object constructor.
    *
@@ -27,6 +28,23 @@ final class OB
   {
     $this->level = ob_get_level();
     ob_start();
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Ends output buffering to a desired level.
+   *
+   * @param int $level The desired level.
+   */
+  public static function endCleanBuffers(int $level = 0): void
+  {
+    while (ob_get_level()>$level)
+    {
+      if (!@ob_end_clean())
+      {
+        ob_clean();
+      }
+    }
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -46,14 +64,7 @@ final class OB
   {
     if ($this->level!==null)
     {
-      while (ob_get_level()>$this->level)
-      {
-        if (!@ob_end_clean())
-        {
-          ob_clean();
-        }
-      }
-
+      self::endCleanBuffers($this->level);
       $this->level = null;
     }
   }
@@ -61,6 +72,9 @@ final class OB
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Wrapper around [ob_get_clean()](https://www.php.net/manual/en/function.ob-a-clean.php).
+   *
+   * Returns the current buffer contents and deletes current output buffer. Essentially executes both getContents() and
+   * endClean().
    *
    * @return string
    */
@@ -83,6 +97,8 @@ final class OB
   /**
    * Wrapper around [ob_get_contents()](https://www.php.net/manual/en/function.ob_get_contents.php).
    *
+   * Returns the contents of the output buffer.
+   *
    * @return string
    */
   public function getContents(): string
@@ -102,6 +118,8 @@ final class OB
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Wrapper around [ob_get_length()](https://www.php.net/manual/en/function.ob_get_length.php).
+   *
+   * Returns the length of the output buffer.
    *
    * @return int
    */
