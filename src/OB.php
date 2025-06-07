@@ -21,7 +21,7 @@ final class OB
   /**
    * Object constructor.
    *
-   * This constructor start output buffering (i.e. calls
+   * This constructor start output buffering (i.e., calls
    * [ob_start()](https://www.php.net/manual/function.ob-start.php)).
    */
   public function __construct()

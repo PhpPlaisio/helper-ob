@@ -69,7 +69,7 @@ class OBTest extends TestCase
     self::assertSame('', $ob->getClean());
     self::assertSame(0, $ob->getLength());
 
-    self::assertSame('Bye, bye', $this->getActualOutput());
+    self::assertSame('Bye, bye', $this->getActualOutputForAssertion());
   }
 
   //--------------------------------------------------------------------------------------------------------------------
